@@ -9,9 +9,16 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  validates :department, length: { in: 2..30 }, allow_blank: true
-  validates :basic_time, presence: true
-  validates :work_time, presence: true
+  validates :employee_number, allow_blank: true, numericality: {only_integer: true}
+  VALID_UID_REGEX = /\A[0-9]+\z/
+  validates :uid, presence: true, length: { maximum: 100 },
+                    format: { with: VALID_UID_REGEX },
+                    uniqueness: true,
+                    allow_blank: true
+  validates :affiliation, length: { in: 2..30 }, allow_blank: true
+  validates :basic_work_time, presence: true, allow_blank: true
+  validates :designated_work_start_time, presence: true, allow_blank: true
+  validates :designated_work_end_time, presence: true, allow_blank: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
