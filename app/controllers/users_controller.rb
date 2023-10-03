@@ -5,10 +5,24 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.all
+  end
+  
+  def import
+    if File.extname(params[:file].original_filename) == ".csv"
+      flash[:success] = 'CSVファイルを読み込みました'
+      User.import(params[:file])
+      redirect_to users_url
+    else
+      flash[:danger] = 'CSVファイルを選択してください'
+      @users = User.all
+      redirect_to users_url
+    end
   end
 
   def show
+    @first_day = Date.current.beginning_of_month
+    @last_day = @first_day.end_of_month
   end
 
   def new
