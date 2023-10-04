@@ -58,7 +58,7 @@
       <% (@first_day..@last_day).each do |day| %>
         <tr>
           <td></td>
-          <td><%= day %>/td>
+          <td><%= l(day, format: :short) %></td>
           <td><%= $days_of_the_week[day.wday] %></td>
           <td></td>
           <td></td>
