@@ -55,11 +55,11 @@
     </thead>
 
     <tbody>
-      <% (@first_day..@last_day).each do |day| %>
+      <% @attendances.each do |day| %>
         <tr>
           <td></td>
-          <td><%= l(day, format: :short) %></td>
-          <td><%= $days_of_the_week[day.wday] %></td>
+          <td><%= l(day.worked_on, format: :short) %></td>
+          <td><%= $days_of_the_week[day.worked_on.wday] %></td>
           <td></td>
           <td></td>
           <td></td>
