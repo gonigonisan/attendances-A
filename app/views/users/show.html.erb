@@ -64,9 +64,13 @@
           <td></td>
           <td><%= l(day.worked_on, format: :short) %></td>
           <td><%= $days_of_the_week[day.worked_on.wday] %></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td><%= l(day.started_at, format: :hour) if day.started_at.present? %></td>
+          <td><%= l(day.started_at, format: :minute) if day.started_at.present? %></td>
+          <td>
+          <% if (Date.current == day.worked_on) && day.started_at.nil? %>
+            <%= link_to "出勤登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+          <% end %>
+          </td>
           <td></td>
           <td></td>
           <td></td>
