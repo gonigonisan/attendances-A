@@ -18,9 +18,9 @@ class User < ApplicationRecord
                     uniqueness: true,
                     allow_blank: true
   validates :affiliation, length: { in: 2..30 }, allow_blank: true
-  validates :basic_work_time, presence: true, allow_blank: true
-  validates :designated_work_start_time, presence: true, allow_blank: true
-  validates :designated_work_end_time, presence: true, allow_blank: true
+  validates :basic_work_time, presence: true
+  validates :designated_work_start_time, presence: true, allow_nil: true
+  validates :designated_work_end_time, presence: true, allow_nil: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
@@ -62,12 +62,12 @@ class User < ApplicationRecord
       user.save
     end
   end
-
+ 
   # 更新を許可するカラムを定義
   def self.updatable_attributes
     ["id", "name", "email", "affiliation", "employee_number", "uid", "basic_work_time", "designated_work_start_time", "designated_work_end_time", "password"]
   end
-
+  
   # ユーザーのログイン情報を破棄します。
   def forget
     update_attribute(:remember_digest, nil)

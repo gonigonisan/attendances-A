@@ -63,10 +63,12 @@ class UsersController < ApplicationController
   end
   
   def update_basic_info
+    @user = User.find(params[:id])
     if @user.update_attributes(basic_info_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました。"
+      flash[:success] = "#{@user.name}さんの基本情報を更新しました。"
     else
-      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+      @user = User.find(params[:id])
+      flash[:danger] = "#{@user.name}さんの更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end
     redirect_to users_url
   end
@@ -78,8 +80,9 @@ class UsersController < ApplicationController
     end
     
     def basic_info_params
-      params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
+      params.require(:user).permit(:name, :email, :affiliation, :uid, :employee_number, :password, :password_confirmation, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
+
 
     # beforeフィルター
 

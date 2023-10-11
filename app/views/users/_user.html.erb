@@ -10,9 +10,9 @@
   <div class="panel-group" id="accordion">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= user.id %>" class="btn btn-primary " >編集</a>
+        <a data-toggle="collapse" data-parent="collapse" href="#collapse<%= user.id %>" class="btn btn-primary " >編集</a>
       </div>
-      <div id="collapse-<%= user.id %>" class="panel-collapse collapse in">
+      <div id="collapse<%= user.id %>" class="collapse" >
         <div class="panel-body">
           <%=  render 'users/edit_basic_info', user: user %>
         </div>
