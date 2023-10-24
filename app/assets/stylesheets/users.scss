@@ -6,6 +6,20 @@
   margin-top: 10px;
 }
 
+/* 出勤中社員一覧テーブル */
+
+#table-index_attendance {
+  th {
+    vertical-align: middle;
+    text-align: center;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+
 /* ユーザー勤怠情報テーブル */
 
 #table-attendances {

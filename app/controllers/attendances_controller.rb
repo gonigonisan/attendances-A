@@ -30,9 +30,19 @@ class AttendancesController < ApplicationController
   end
   
   def update_one_month
-    ActiveRecord::Base.transaction do # トランザクションを開始します。
+    ActiveRecord::Base.transaction do
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
+        # item[:started_at]とitem[:finished_at]がない場合、次に行く
+        unless item[:started_at].present? && item[:finished_at].present?
+          next;
+        end
+        if item[:next_day] == 'true'
+          # item[:finished_at] を文字列から Time に変換
+          item[:finished_at] = Time.zone.parse(item[:finished_at])
+          # item[:finished_at] に 24 時間を加算
+          item[:finished_at] += 24.hours
+        end
         attendance.update!(item)
       end
     end

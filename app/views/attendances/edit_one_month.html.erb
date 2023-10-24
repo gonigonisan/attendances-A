@@ -28,12 +28,7 @@
                 <td><%= attendance.time_field :started_at, class: "form-control" %></td>
                 <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
               <% end %>
-              <td>
-                <% if day.worked_on > Date.today %>                            
-                <% else %>
-                  <%= attendance.check_box :next_day, {}, "true", "false" %>
-                <% end %>
-              </td>
+              <td><%= attendance.check_box :next_day, {}, "true", "false" %></td>
               <td>
                 <% if day.started_at.present? && day.finished_at.present? %>
                   <%= working_times(day.started_at, day.finished_at) %>

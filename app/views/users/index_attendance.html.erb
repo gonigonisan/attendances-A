@@ -1,0 +1,28 @@
+<% provide(:title, "出勤中社員一覧") %>
+<h1>出勤中社員一覧</h1>
+
+<div>
+  <table class="table table-bordered table-condensed table-hover text-center table-striped" id="table-index_attendance">
+    <thead>
+      <tr>
+        <th>社員番号</th>
+        <th>名前</th>
+      </tr>  
+    </thead>
+    
+    <% ary = [@now_users_employee_number, @now_users].transpose %>
+
+    <tbody>
+      <% ary.each do |key, value| %>
+          <tr>
+            <td>
+              <%= key %>
+             </td>
+             <td>
+              <%= value %>
+            </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
