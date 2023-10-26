@@ -1,0 +1,41 @@
+<% provide(:title, "拠点一覧") %>
+<% provide(:class_text, "base-point-info") %>
+<% provide(:button_text, "拠点情報追加") %>
+<h1>拠点一覧</h1>
+
+<div>
+  <table class="table table-bordered table-condensed table-hover text-center table-striped" id="table-index_attendance">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>拠点番号</th>
+        <th>拠点名</th>
+        <th>勤怠種類</th>
+      </tr>  
+    </thead>
+    
+    <tbody>
+          <tr>
+            <td><%= link_to "修正", "#", class: "btn btn-primary" %></td>
+             <td><%= link_to "削除", "#", class: "btn btn-primary" %></td>
+             <td></td>
+             <td></td>
+             <td></td>
+          </tr>
+    </tbody>
+  </table>
+  
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <a data-toggle="collapse" data-parent="collapse" href="#collapse" class="btn btn-primary" >拠点情報追加</a>
+      </div>
+      <div id="collapse" class="panel-collapse collapse" >
+        <div class="panel-body">
+          <%=  render 'base_points/form' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

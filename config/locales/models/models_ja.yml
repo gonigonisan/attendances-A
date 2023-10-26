@@ -25,3 +25,7 @@ ja:
           user: ユーザーID
           overtime: 残業時間
           banksmen: 残業指示者
+        base_point:
+          base_name: 拠点名
+          information: 勤怠種類
+          base_number: 拠点番号
