@@ -3,7 +3,7 @@
 <% provide(:button_text, "拠点情報追加") %>
 <h1>拠点一覧</h1>
 
-<div>
+<div class="col-md-10 col-md-offset-1">
   <table class="table table-bordered table-condensed table-hover text-center table-striped" id="table-index_attendance">
     <thead>
       <tr>
@@ -16,20 +16,33 @@
     </thead>
     
     <tbody>
+      <% @base_points.each do |base| %>
           <tr>
-            <td><%= link_to "修正", "#", class: "btn btn-primary" %></td>
-             <td><%= link_to "削除", "#", class: "btn btn-primary" %></td>
-             <td></td>
-             <td></td>
-             <td></td>
+            <td>
+              <button type="button" 
+                data-toggle="collapse" 
+                data-target="#<%= base_point.base_number %>" 
+                class="btn btn-primary">
+                修正
+              </button>
+            </td>
+             <td>
+              <%= link_to "削除", base_point, method: :delete,
+                data: { confirm: "削除してよろしいですか？" },
+                class: "btn btn-primary" %>
+             </td>
+             <td><%= base_point.base_number%></td>
+             <td><%= base_point.base_name%></td>
+             <td><%= base_point.information %></td>
           </tr>
+      <% end %>
     </tbody>
   </table>
   
   <div class="panel-group">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <a data-toggle="collapse" data-parent="collapse" href="#collapse" class="btn btn-primary" >拠点情報追加</a>
+        <a data-toggle="collapse" data-parent="collapse" href="#collapse" class="btn btn-primary" >作成する</a>
       </div>
       <div id="collapse" class="panel-collapse collapse" >
         <div class="panel-body">
