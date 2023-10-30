@@ -26,7 +26,7 @@ class BasesController < ApplicationController
   
   def update
     @base = Base.find(params[:id])
-    if @base.update_attributes(base_params)
+    if @base.update_attributes(base_update_params)
       flash[:success] = "#{@base.base_name}の拠点情報を修正しました。"
       redirect_to bases_path
     else
@@ -54,5 +54,9 @@ class BasesController < ApplicationController
     def base_params
       params.permit(:base_name, :base_number, :information)
     end    
+    
+    def base_update_params
+      params.require(:base).permit(:base_name, :base_number, :information)
+    end 
 end
 
