@@ -2,14 +2,14 @@
 
 User.create!(name: "上長A",
              email: "zyoutyouA@email.com",
-             password: "password",
-             password_confirmation: "password",
+             password: "123456",
+             password_confirmation: "123456",
              admin: true)
              
 User.create!(name: "上長B",
              email: "zyoutyouB@email.com",
-             password: "password",
-             password_confirmation: "password",
+             password: "123456",
+             password_confirmation: "123456",
              admin: true)
 
 10.times do |n|

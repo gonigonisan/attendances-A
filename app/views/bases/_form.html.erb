@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    
+    <%= form_with(model: @base, local: true) do |f| %>
+      <!--<!%= render 'shared/error_messages', object: @base %>-->
+    
+      <%= f.label "拠点番号", class: "label-#{yield(:class_text)}" %>
+      <%= f.number_field :base_number, class: "form-control" %>
+    
+      <%= f.label "拠点名", class: "label-#{yield(:class_text)}" %>
+      <%= f.text_field :base_name, class: "form-control" %>
+    
+      <%= f.label "勤怠種類", class: "label-#{yield(:class_text)}" %>
+      <%= f.text_field :information, :placeholder => "出勤または退勤を入力してください。", class: "form-control" %>
+    
+      <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+    <% end %>
+  </div>
+</div>
