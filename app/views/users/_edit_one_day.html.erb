@@ -1,0 +1,50 @@
+<% provide(:title, @user.name) %>
+
+<div>
+  <h1>【残業申請】</h1>
+  <table class ="table table-striped table-bordered table-condensed table-hover" id ="table-attendances">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>曜日</th>
+        <th>終了予定時間</th>
+        <th>翌日</th>
+        <th>業務処理内容</th>
+        <th>指示者確認　印</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <%= f.fields_for "attendances[]", day do |attendance| %>
+        <tr>
+          <td><%= l(day.worked_on, format: :short) %></td>
+          <td><%= $days_of_the_week[day.worked_on.wday] %></td>
+          <% if !current_user.admin? && (Date.current < day.worked_on) %>
+            <td><%= attendance.time_field :started_at, readonly: true, class: "form-control" %></td>
+            <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
+          <% else %>
+            <td><%= attendance.time_field :started_at, class: "form-control" %></td>
+            <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
+          <% end %>
+          <td><%= attendance.check_box :next_day, {}, "true", "false" %></td>
+          <td>
+            <% if day.started_at.present? && day.finished_at.present? %>
+              <%= working_times(day.started_at, day.finished_at) %>
+            <% end %>
+          </td>
+          <td><%= attendance.text_field :note, class: "form-control" %></td>
+          <td>
+            <select class="form-select" id="exampleFormSelect1">
+              <option selected></option>
+              <option value="1">上長A</option>
+              <option value="2">上長B</option>
+            </select>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class ="center">
+    <%= f.submit "変更を送信する", class: "btn btn-lg btn-primary" %>
+  </div>
+</div>
