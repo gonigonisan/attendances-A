@@ -53,6 +53,24 @@ class AttendancesController < ApplicationController
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+  def edit_overtime_request
+  end
+  
+  def update_overtime_request
+    # 取得できるものは以下と同じ @user = User.find(params[:id])
+    @user = User.find(params[:attendance][:user_id])
+    @attendance = @user.attendances.find(params[:attendance][:id])
+    # binding.pry
+    if params[:attendance][:overtime_finished_at].blank? || params[:attendance][:indicater_check].blank?
+      flash[:dager] = "必須箇所が空欄です。"
+      redirect_to @user
+    else
+      @attendance.update_attributes(overtime_params)
+      flash[:success] = "残業申請が完了しました。"
+      redirect_to @user and return
+    end
+  end
+  
   private
   # １ヶ月分の勤怠情報を扱います。
   def attendances_params
@@ -67,5 +85,10 @@ class AttendancesController < ApplicationController
         flash[:danger] = "編集権限がありません。"
         redirect_to(root_url)
       end  
+    end
+    
+    # モーダルの情報
+    def overtime_params
+      params.require(:user).permit(attendances: [:overtime_finished_at, :next_day, :overtime_work,:indicater_check])
     end
 end
