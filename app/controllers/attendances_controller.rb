@@ -54,12 +54,15 @@ class AttendancesController < ApplicationController
   end
   
   def edit_overtime_request
+    # debugger
+    @user = User.find(params[:user_id])
+    @attendance = Attendance.find(params[:attendance_id])
   end
   
   def update_overtime_request
     # 取得できるものは以下と同じ @user = User.find(params[:id])
-    @user = User.find(params[:attendance][:user_id])
-    @attendance = @user.attendances.find(params[:attendance][:id])
+    @user = User.find(params[:user_id])
+    @attendance = Attendance.find(params[:attendance_id])
     # binding.pry
     if params[:attendance][:overtime_finished_at].blank? || params[:attendance][:indicater_check].blank?
       flash[:dager] = "必須箇所が空欄です。"
@@ -72,10 +75,10 @@ class AttendancesController < ApplicationController
   end
   
   private
-  # １ヶ月分の勤怠情報を扱います。
-  def attendances_params
-    params.require(:user).permit(attendances: [:started_at, :finished_at, :next_day, :note])[:attendances]
-  end
+    # １ヶ月分の勤怠情報を扱います。
+    def attendances_params
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :next_day, :note])[:attendances]
+    end
     # beforeフィルター
 
     # 管理権限者、または現在ログインしているユーザーを許可します。
@@ -89,6 +92,6 @@ class AttendancesController < ApplicationController
     
     # モーダルの情報
     def overtime_params
-      params.require(:user).permit(attendances: [:overtime_finished_at, :next_day, :overtime_work,:indicater_check])
+      params.require(:attendance).permit(:overtime_finished_at, :next_day, :overtime_work,:indicater_check)
     end
 end

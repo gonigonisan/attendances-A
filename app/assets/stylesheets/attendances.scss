@@ -1,10 +1,21 @@
 /* 基本情報編集モーダルウインドウ */
 
-.label-basic-info {
+#table-overtime-request {
+  th {
+    vertical-align: middle;
+    text-align: center;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+.overtime-request {
   margin-top: 5px;
 }
 
-.btn-basic-info {
+.btn-overtime-request {
   margin: 15px 0;
-  width: 30%;
+  width: 60%;
 }

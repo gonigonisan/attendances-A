@@ -8,39 +8,37 @@
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <%= form_with(model: @attendance, url: user_attendance_edit_overtime_request_path(@attendance), local: true, method: :patch) do |f| %>
-            <table class="table table-bordered table-condensed user-table">
+        <div class="col-md-10 col-md-offset-1">
+          <%= form_with(model: @attendance, url: user_attendance_update_overtime_request_path(@user), local: true, method: :patch) do |f| %>
+            <table class="table table-striped table-bordered table-condensed" id="table-overtime-request">
               <thead>
                 <th>日付</th>
                 <th>曜日</th>
                 <th>終了予定時間</th>
                 <th>翌日</th>
                 <th>業務処理内容</th>
-                <th>指示者確認
-                  <div class="maru size_small black">       
-                    <div class="letter3">印
-                  </div> 
+                <th>指示者確認<div class="maru size_small black">       
+                  <div class="letter3">印</div>
                 </th>
               </thead>
               <tbody>
                 <% css_class = 
-                case $days_of_the_week[day.worked_on.wday]
+                case $days_of_the_week[@attendance.worked_on.wday]
                   when '土'
                     'text-primary'
                   when '日'
                     'text-danger'
                   end
                   %>
-                <td><%= l(day.worked_on, format: :short) %></td>
-                <td class="<%= css_class %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
-                <td><%= f. time_select :overtime_finished_at,{class: "form-control bootstrap-date-only-width"} %></td>
-                <td><%= f.check_box :next_day,id: "next_day" %></td>
-                <td><%= f.text_fild :overtime_work, class:"form-control" %></td>
-                <td><%= f.select :indicater_check,{'なし':1, '申請中':2, '承認':3, '否認':4},{ class: 'form-control input-sm' , required: true } %></td>
+                <td><%= l(@attendance.worked_on, format: :short) %></td>
+                <td class = "<%= css_class %>" ><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
+                <td><%= f.time_field :overtime_finished_at,{class: "overtime-request bootstrap-date-only-width"} %></td>
+                <td><%= f.check_box :next_day, id: "next_day" %></td>
+                <td><%= f.text_field :overtime_work, class: "overtime-request" %></td>
+                <td><%= f.select :indicater_check,{'なし':1, '申請中':2, '承認':3, '否認':4},{ class: 'overtime-request input-sm' , required: true } %></td>
               </tbody>
             </table>
-                <%= f.submit "変更を送信する", class: "btn btn-primary btn-block" %>
+            <%= f.submit "変更を送信する", class: "btn btn-primary btn-block btn-overtime-request" %>
           <% end %>
         </div>
       </div>
