@@ -1,5 +1,8 @@
 class Attendance < ApplicationRecord
   belongs_to :user
+  has_many :belongings, dependent: :destroy
+  has_many :applies, dependent: :destroy
+  has_many :users, through: :belongings 
 
   validates :worked_on, presence: true
   validates :note, length: { maximum: 50 }

@@ -30,7 +30,13 @@
 <div>
   <div class= "notification"> 
     <% if current_user.admin? %>
-      <li><%= link_to "【所属長承認申請のお知らせ】", "#" %></li>
+      <li>
+        <% if current_user.id == 1 %>
+          <%= link_to "【所属長承認申請のお知らせ】", applies_index1_path, remote: true %>
+        <% else current_user.id == 2 %>
+          <%= link_to "【所属長承認申請のお知らせ】", applies_index2_path, remote: true %>
+        <% end %>
+      </li>
       <li><%= link_to "【勤怠変更申請のお知らせ】", "#" %></li>
       <li><%= link_to "【残業申請のお知らせ】", "#" %></li>
     <% end %>
@@ -137,9 +143,16 @@
         </td>
         <td colspan="5"></td>
         <td>
-          <p>所属長承認</p>
-          <p>
-          <p><%= link_to "申請", "#", class: "btn btn-primary" %></p>
+          <%= form_with(model: @user, url: attendances_update_month_approval_user_path(@user), method: :patch , local: true) do |f| %>
+          <%= f.hidden_field :indicater_reply_month, :value => "申請中" %>
+          <div class="form-group">
+            <%= f.label :indicater_check_month,"承認 未" %>
+            <%= f.collection_select(:indicater_check_month, @superior, :name, :name, {prompt: "上司を選択して下さい"}, {class: "form-control input-sm"})　%>
+          </div>
+          <div class="form-group">
+            <%= f.submit '申請する', class: 'btn btn-primary' %>
+          </div>
+          <% end %>
         </td>
       </tr>
     </tfoot>
@@ -148,3 +161,5 @@
 
 <!--モーダルウインドウ表示-->
 <div id="edit_overtime_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="index1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="index2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

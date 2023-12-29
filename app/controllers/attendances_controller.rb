@@ -53,10 +53,23 @@ class AttendancesController < ApplicationController
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+  # 1ヶ月分の申請
+  def update_month_approval
+    @user = User.find(params[:id])
+    @attendance = Attendance.find(params[:id])
+    @superior = User.where(superior: true).where.not( id: current_user.id )
+    if @attendance.update_attributes(month_approval_params)
+      flash[:success] = "#承認を受け付けました"
+      redirect_to user_url(@user)
+    end  
+  end 
+  
+  # 申請モーダル
   def edit_overtime_request
     # debugger
     @user = User.find(params[:user_id])
     @attendance = Attendance.find(params[:attendance_id])
+    @adomin = User.where(admin: true).where.not( id: current_user.id )
   end
   
   def update_overtime_request
@@ -90,8 +103,17 @@ class AttendancesController < ApplicationController
       end  
     end
     
-    # モーダルの情報
+    def month_approval_params 
+      # attendanceテーブルの（承認月,指示者確認、どの上司か）
+      params.require(:user).permit(attendances: [:month_approval, :indicater_reply_month, :indicater_check_month])[:attendances]
+    end
+    
+    # 申請モーダルの情報
     def overtime_params
-      params.require(:attendance).permit(:overtime_finished_at, :next_day, :overtime_work,:indicater_check)
+      params.require(:attendance).permit(:overtime_finished_at, :next_day, :overtime_work,:indicater_check, :indicater_check_superior)
+    end
+    
+    # 申請お知らせモーダルの情報
+    def overtime_notice_params
     end
 end
