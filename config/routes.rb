@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       patch 'update_basic_info'
       get 'attendances/edit_one_month' 
       patch 'attendances/update_one_month'
+      get 'attendances/edit_month_approval'
+      patch 'attendances/update_month_approval'
     end
     collection do
       post 'import'
@@ -26,8 +28,6 @@ Rails.application.routes.draw do
     resources :attendances, only: [:update] do
         get 'edit_overtime_request'
         patch 'update_overtime_request'
-        get 'edit_month_approval'
-        patch 'update_month_approval'
     end
   end
 end

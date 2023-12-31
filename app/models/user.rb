@@ -27,6 +27,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
+
   # 渡された文字列のハッシュ値を返します。
   def User.digest(string)
     cost = 
@@ -75,4 +76,5 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+  
 end

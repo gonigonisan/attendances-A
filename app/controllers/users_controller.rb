@@ -22,8 +22,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    # 1ヶ月分の勤怠データの中で、出勤時間が何も無い状態では無いものの数を代入
-    @worked_sum = @attendances.where.not(started_at: nil).
     @superior = User.where(superior: true).where.not(id: current_user.id)
     @first_day = params[:date].nil? ?
     Date.current.beginning_of_month : params[:date].to_date
@@ -31,16 +29,16 @@ class UsersController < ApplicationController
     one_month = [*@first_day..@last_day]
     @attendances = @user.attendances.where(worked_on: 
     @first_day..@last_day).order(:worked_on)
-    unless one_month.count == @attendances.count
-      ActiveRecord::Base.transaction do
-        one_month.each { |day| @user.attendances.create!(worked_on: day) }
+    @worked_sum = @attendances.where.not(started_at: nil).count
+      unless one_month.count == @attendances.count
+        ActiveRecord::Base.transaction do
+          one_month.each { |day| @user.attendances.create!(worked_on: day) }
+        end
+        @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
       end
-      @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
-    end
-    rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid
       flash[:danger] = "ページ情報の取得に失敗しました"
       redirect_to root_url
-    end
   end
 
   def new
