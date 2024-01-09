@@ -30,7 +30,7 @@
 <div>
   <div class= "notification"> 
     <% if current_user.admin? %>
-      <li><%= link_to "【所属長承認申請のお知らせ】", attendances_edit_month_approval_user_path(@user) %></li>
+      <li><%= link_to "【所属長承認申請のお知らせ】", attendances_edit_month_approval_user_path(@user), remote: true %><span class="red_box"><%= "#{@overtime}件"%></span></li>
       <li><%= link_to "【勤怠変更申請のお知らせ】", "#" %></li>
       <li><%= link_to "【残業申請のお知らせ】", "#" %></li>
     <% end %>
@@ -155,4 +155,4 @@
 
 <!--モーダルウインドウ表示-->
 <div id="edit_overtime_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<div id="edit_month_approva" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit_month_approval" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

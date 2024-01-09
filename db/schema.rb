@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20231230214932) do
+ActiveRecord::Schema.define(version: 20240104202147) do
 
   create_table "applies", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20231230214932) do
     t.string "instructor_test"
     t.string "indicater_reply_month"
     t.string "indicater_check_month"
+    t.date "month_approval"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
